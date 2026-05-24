@@ -1,4 +1,4 @@
-# Task 2 - Univariate Linear Regression using Gradient Descent
+# Univariate Linear Regression using Gradient Descent
 
 ## Objective
 
