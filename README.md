@@ -44,7 +44,7 @@ where:
 Mean Squared Error (MSE) is used as the loss function:
 
 <img width="165" height="38" alt="Screenshot 2026-05-24 at 10 35 03 PM" src="https://github.com/user-attachments/assets/4e3a6de4-c96d-47f7-873e-c1072cb6911e" />
-The objective of training is to find values of **m** and **b** that minimize this loss.
+The objective of training is to find values of m and b that minimize this loss.
 
 ---
 
@@ -445,3 +445,86 @@ The model achieved moderate predictive performance with an R² score of 0.5966. 
 
 <img width="770" height="564" alt="Screenshot 2026-05-25 at 1 06 16 AM" src="https://github.com/user-attachments/assets/26409ee7-9d2b-49e7-8956-73ecbda38b7b" />
 
+# Logistic Regression
+
+## Task Overview
+
+The objective of this task was to build and compare Logistic Regression models for predicting passenger survival on the Titanic. Three models were developed:
+
+- Full Feature Model
+- 2-Feature Model (Age, Fare)
+- 3-Feature Model (Age, Fare, Pclass)
+
+The dataset was preprocessed by handling missing values, encoding categorical variables, removing irrelevant columns, and splitting the data into training and testing sets.
+
+---
+
+## Concept
+
+Logistic Regression is a supervised machine learning algorithm used for binary classification problems. It predicts the probability of an observation belonging to a class using the Sigmoid Function.
+
+- Probability ≥ 0.5 → Survived (1)
+- Probability < 0.5 → Did Not Survive (0)
+
+---
+
+## Results
+
+| Model | Accuracy | Precision | Recall | F1-Score |
+|---------|---------|---------|---------|---------|
+| Full Feature Model | 81.01% | 78.57% | 74.32% | 76.39% |
+| 2-Feature Model | 64.80% | 76.19% | 21.62% | 33.68% |
+| 3-Feature Model | 73.74% | 76.47% | 52.70% | 62.40% |
+
+---
+
+## Visualizations
+
+The following visualizations were generated:
+
+- Confusion Matrix Heatmaps for all three models
+  <img width="494" height="388" alt="Screenshot 2026-06-01 at 1 41 16 AM" src="https://github.com/user-attachments/assets/d737e629-fae2-43e3-8632-4a8f992cb58c" />
+  <img width="477" height="389" alt="Screenshot 2026-06-01 at 1 41 31 AM" src="https://github.com/user-attachments/assets/301930cb-34c5-4fe5-a682-57e112e4f4a4" />
+<img width="487" height="395" alt="Screenshot 2026-06-01 at 1 41 24 AM" src="https://github.com/user-attachments/assets/bf6adea8-07d3-47af-bf40-387b285cfc84" />
+
+- 2D Decision Boundary using Age and Fare
+- <img width="742" height="573" alt="Screenshot 2026-06-01 at 1 41 41 AM" src="https://github.com/user-attachments/assets/7f205b04-7fb1-481e-a434-0158d62bcec6" />
+
+- 3D Decision Plane using Age, Fare, and Pclass
+<img width="742" height="573" alt="Screenshot 2026-06-01 at 1 41 41 AM" src="https://github.com/user-attachments/assets/514ac017-f67f-4aff-9b03-2d83706b5c63" />
+
+---
+
+## Predictions for New Data
+
+### Passenger 1
+
+| Model | Survival Probability | Prediction |
+|---------|---------|---------|
+| Full Feature | 0.0984 | Did Not Survive |
+| 2-Feature | 0.3206 | Did Not Survive |
+| 3-Feature | 0.2659 | Did Not Survive |
+
+### Passenger 2
+
+| Model | Survival Probability | Prediction |
+|---------|---------|---------|
+| Full Feature | 0.9134 | Survived |
+| 2-Feature | 0.4843 | Did Not Survive |
+| 3-Feature | 0.6192 | Survived |
+
+---
+
+## Observations
+
+- The Full Feature Model achieved the highest accuracy and overall performance.
+- The 3-Feature Model provided a balance between performance and visualization.
+- The 2-Feature Model had the lowest accuracy because it used limited information.
+- Passenger 2 was correctly classified by the Full Feature and 3-Feature models but misclassified by the 2-Feature model.
+- Feature selection significantly affects prediction performance and model confidence.
+
+---
+
+## Conclusion
+
+The Full Feature Logistic Regression model performed best because it utilized all relevant passenger information. Reduced-feature models made visualization easier but resulted in lower classification performance, demonstrating the importance of feature selection in machine learning.
