@@ -528,3 +528,226 @@ The following visualizations were generated:
 ## Conclusion
 
 The Full Feature Logistic Regression model performed best because it utilized all relevant passenger information. Reduced-feature models made visualization easier but resulted in lower classification performance, demonstrating the importance of feature selection in machine learning.
+
+
+# Machine Learning Classification Algorithms
+
+This repository contains implementations of three fundamental machine learning classification algorithms using the Play Tennis dataset:
+
+- Naive Bayes Classifier
+- Decision Tree Classifier
+- Random Forest Classifier
+
+The goal is to understand how different classification algorithms learn patterns from data and make predictions.
+
+---
+
+# Naive Bayes Classifier
+
+## What is Naive Bayes?
+
+Naive Bayes is a probabilistic classification algorithm based on Bayes' Theorem. It predicts the most likely class of a sample by calculating probabilities from previously observed data.
+
+For example, given weather conditions:
+
+- Outlook = Sunny
+- Temperature = Cool
+- Humidity = High
+- Wind = Strong
+
+the algorithm estimates the probability of each class and predicts the class with the highest probability.
+
+## Key Concepts
+
+### Prior Probability
+
+The probability of a class before observing any feature values.
+
+Example:
+
+P(Yes) = 9/14
+
+P(No) = 5/14
+
+### Conditional Probability
+
+The probability of observing a feature value given a particular class.
+
+Example:
+
+P(Sunny | Yes)
+
+### Posterior Probability
+
+The probability of a class after observing all feature values.
+
+Example:
+
+P(Yes | X)
+
+where X represents the complete set of features.
+
+## Why is it Called Naive?
+
+The algorithm assumes that all features are conditionally independent given the class label. Although this assumption is often unrealistic, the algorithm performs surprisingly well in practice.
+
+## Advantages
+
+- Simple and fast
+- Easy to implement
+- Works well with categorical data
+- Effective on small datasets
+
+---
+
+# Decision Tree Classifier
+
+## What is a Decision Tree?
+
+A Decision Tree is a rule-based machine learning algorithm that makes predictions by repeatedly asking questions about the input features.
+
+Example:
+
+Outlook?
+
+├── Overcast → Yes
+
+├── Sunny
+
+│   └── Humidity?
+
+│       ├── High → No
+
+│       └── Normal → Yes
+
+└── Rain
+
+    └── Wind?
+
+        ├── Strong → No
+
+        └── Weak → Yes
+
+Each question splits the dataset into smaller and more homogeneous groups.
+
+## Key Concepts
+
+### Entropy
+
+Entropy measures the uncertainty or impurity of a dataset.
+
+- Entropy = 0 → Completely pure
+- Higher entropy → More mixed classes
+
+### Information Gain
+
+Information Gain measures how much uncertainty is reduced after splitting on a feature.
+
+The feature providing the highest information gain is selected for the split.
+
+### Gini Impurity
+
+Gini Impurity is another measure of impurity commonly used in decision trees.
+
+Lower Gini values indicate better splits.
+
+### Recursive Splitting
+
+After selecting the best root node, the same process is repeated on each subset until the data becomes sufficiently pure.
+
+## Advantages
+
+- Easy to visualize and interpret
+- Handles categorical data naturally
+- Captures non-linear decision boundaries
+
+---
+
+# Random Forest Classifier
+
+## What is Random Forest?
+
+Random Forest is an ensemble learning algorithm that combines multiple decision trees to make more reliable predictions.
+
+Instead of relying on a single tree, several trees are trained independently and their predictions are combined using majority voting.
+
+Example:
+
+Tree 1 → Yes
+
+Tree 2 → No
+
+Tree 3 → Yes
+
+Final Prediction → Yes
+
+## Core Ideas Behind Random Forest
+
+### Bootstrap Sampling
+
+Each tree is trained on a randomly sampled version of the dataset using sampling with replacement.
+
+This means:
+
+- Some rows may appear multiple times
+- Some rows may not appear at all
+
+### Random Feature Selection
+
+Different trees consider different subsets of features while creating splits.
+
+This introduces diversity among the trees.
+
+### Majority Voting
+
+Each tree makes an individual prediction.
+
+The class receiving the highest number of votes becomes the final prediction.
+
+## Why is Random Forest Better Than a Single Tree?
+
+A single decision tree can easily overfit the training data.
+
+Random Forest reduces overfitting by averaging the predictions of many trees, resulting in:
+
+- Lower variance
+- Better generalization
+- More stable predictions
+
+## Advantages
+
+- High predictive performance
+- Less prone to overfitting
+- Robust to noisy data
+- Handles complex relationships effectively
+
+---
+
+# Technologies Used
+
+- Python
+- Pandas
+- NumPy
+- Scikit-Learn
+- Matplotlib
+
+---
+
+# Files
+
+- `play_tennis.csv` - Dataset used for training and evaluation
+- `naive_bayes.py` - Naive Bayes implementation and verification
+- `decision_tree.py` - Decision Tree implementation and verification
+- `random_forest.py` - Random Forest implementation and verification
+
+---
+
+# Conclusion
+
+This repository demonstrates three important approaches to classification:
+
+- **Naive Bayes** - Probabilistic Learning
+- **Decision Tree** - Rule-Based Learning
+- **Random Forest** - Ensemble Learning
+
+Together, these algorithms show how machine learning models can make predictions using probabilities, decision rules, and collective voting strategies.
