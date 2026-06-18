@@ -831,8 +831,8 @@ While the paper's architecture was powerful, the original repo implementation co
 
 ## 🛠️ Key Architectural Nuances
 
-* **Scale Invariance via Global Max Pooling:** The legacy `Flatten()` layer was replaced with `GlobalMaxPooling1D()`. Instead of blindly smashing sequence indices together, global pooling scans each feature channel and extracts only its single highest activation value. This decouples the network from fixed input dimensions, allowing it to process 100-sample sequences or wider 640-sample sequences without dimensional errors.
-* **Stride Invariance in Pooling:** Intermediate max-pooling layers use a custom configuration (`pool_size=3, strides=1`). This allows the filters to smooth local wave noise while keeping the spatial timeline resolution completely intact until the global pooling layer at the very end.
+* **Scale Invariance via Global Max Pooling:** The legacy `Flatten()` layer was replaced with `GlobalMaxPooling1D()`. Instead of blindly smashing sequence indices together, global pooling scans each feature channel and extracts only its single highest activation value. This decouples the network from fixed input dimensions, allowing it to process 100-sample sequences or wider 640-sample sequences without dimensional errors. (Present in the original repo code)
+* **Stride Invariance in Pooling:** Intermediate max-pooling layers use a custom configuration (`pool_size=3, strides=1`). This allows the filters to smooth local wave noise while keeping the spatial timeline resolution completely intact until the global pooling layer at the very end.(Present in the original repo code)
 
 ---
 
