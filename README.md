@@ -38,7 +38,7 @@
   * [Core References & Datasets](#-core-references--datasets)
   * [Dataset Specifications](#-dataset-specifications)
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
-  * * [🏗️ Model Architecture & Specifications](#-model-architecture--specifications)
+  * [🏗️ Model Architecture & Specifications](#-model-architecture--specifications)
   * [📊 Network Summary](#-network-summary)
   * [🧬 Layer Breakdown](#-layer-breakdown)
   * [⚙️ Training Strategy](#-training-strategy)
