@@ -850,40 +850,37 @@ While the paper's architecture was powerful, the original repo implementation co
 | **Target Scale** | Customized 17 Classes | Original 16 MATLAB Classes | **Customized 17 CSV Classes (SEED)** |
 
 
-## 📊 Evaluation Metrics (Pure CNN Baseline)
+## 📊 Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)
 
 Calculated entirely on the isolated, unseen **Test Set Vault** at peak performance weights:
 
-* **True Model Test Accuracy:** 95.45%
-* **Early Stopping Trigger:** Terminated at Epoch 20 (Restored to Epoch 10 weights)
-* **Best Validation Loss:** 0.1582
+* **True Model Test Accuracy:** 97.84%
+* **Early Stopping Trigger:** Terminated at Epoch 60 (Restored to Epoch 50 weights)
+* **Best Validation Loss:** 0.0769
+* 
 
 ### Unbiased Test Classification Report
-
 ```text
-                                precision    recall  f1-score   support
+                                  precision    recall  f1-score   support
 
-               Pure_Sinusoidal       0.99      1.00      0.99       150
-                           Sag       0.97      0.99      0.98       150
-                         Swell       0.97      0.99      0.98       150
-                  Interruption       0.99      1.00      1.00       150
-                     Transient       0.77      1.00      0.87       150
-         Oscillatory_Transient       0.95      0.93      0.94       150
-                     Harmonics       0.99      1.00      1.00       150
-            Harmonics_with_Sag       0.98      0.99      0.98       150
-          Harmonics_with_Swell       1.00      0.97      0.98       150
-                       Flicker       0.99      0.85      0.92       150
-              Flicker_with_Sag       0.94      0.92      0.93       150
-            Flicker_with_Swell       1.00      0.86      0.92       150
-Sag_with_Oscillatory_Transient       0.99      0.91      0.94       150
-Swell_with_Oscillatory_Transient     1.00      0.90      0.95       150
-            Sag_with_Harmonics       0.98      0.95      0.97       150
-          Swell_with_Harmonics       0.83      0.99      0.90       150
-                         Notch       0.99      0.98      0.98       150
+                 Pure_Sinusoidal       1.00      1.00      1.00       150
+                             Sag       0.97      1.00      0.99       150
+                           Swell       0.97      1.00      0.99       150
+                    Interruption       1.00      0.99      0.99       150
+                       Transient       0.95      0.97      0.96       150
+           Oscillatory_Transient       0.92      0.95      0.93       150
+                       Harmonics       1.00      1.00      1.00       150
+              Harmonics_with_Sag       0.99      0.98      0.98       150
+            Harmonics_with_Swell       1.00      0.98      0.99       150
+                         Flicker       0.99      1.00      1.00       150
+                Flicker_with_Sag       0.95      0.98      0.97       150
+              Flicker_with_Swell       0.99      0.97      0.98       150
+  Sag_with_Oscillatory_Transient       0.98      0.92      0.95       150
+Swell_with_Oscillatory_Transient       0.97      0.95      0.96       150
+              Sag_with_Harmonics       0.98      0.99      0.98       150
+            Swell_with_Harmonics       0.97      0.97      0.97       150
+                           Notch       0.99      0.98      0.99       150
 
-                      accuracy                           0.95      2550
-                     macro avg       0.96      0.95      0.96      2550
-                  weighted avg       0.96      0.95      0.96      2550
-
-
-
+                        accuracy                           0.98      2550
+                       macro avg       0.98      0.98      0.98      2550
+                    weighted avg       0.98      0.98      0.98      2550
