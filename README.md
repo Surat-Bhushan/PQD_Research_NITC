@@ -40,7 +40,7 @@
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
   * [Key Architectural Nuances](#%EF%B8%8F-key-architectural-nuances)
   * [Evolutionary Feature Comparison Matrix](#-evolutionary-feature-comparison-matrix)
-  * [Evaluation Metrics (Pure CNN Baseline)](#-evaluation-metrics-pure-cnn-baseline)
+  * [Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)](#-evaluation-metrics-of-latest-run-on-thu-jun-18-10:52:05-pure-cnn-baseline)
 
 ---
 
