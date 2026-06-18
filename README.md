@@ -40,8 +40,7 @@
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
   * [Key Architectural Nuances](#%EF%B8%8F-key-architectural-nuances)
   * [Evolutionary Feature Comparison Matrix](#-evolutionary-feature-comparison-matrix)
-  * [Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)](#evaluation-metrics-of-latest-run-on-thu-jun-18-105205-pure-cnn-baseline)
----
+  * [Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)](#latest-run-metrics)---
 
 # Univariate Linear Regression using Gradient Descent
 
@@ -849,7 +848,7 @@ While the paper's architecture was powerful, the original repo implementation co
 | **Target Scale** | Customized 17 Classes | Original 16 MATLAB Classes | **Customized 17 CSV Classes (SEED)** |
 
 
-## 📊 Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)
+## <a name="latest-run-metrics"></a>📊 Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)
 
 Calculated entirely on the isolated, unseen **Test Set Vault** at peak performance weights:
 
