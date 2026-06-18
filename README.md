@@ -1,6 +1,6 @@
 # 📑 Table of Contents
 
-* [1. Univariate Linear Regression using Gradient Descent](#1-univariate-linear-regression-using-gradient-descent)
+* [Univariate Linear Regression using Gradient Descent](#univariate-linear-regression-using-gradient-descent)
   * [Objective](#objective)
   * [Dataset](#dataset)
   * [Linear Regression Model](#linear-regression-model)
@@ -12,7 +12,7 @@
   * [Verification using Scikit-Learn](#verification-using-scikit-learn)
   * [Experimental Observations and Parameter Tuning](#experimental-observations-and-parameter-tuning)
   * [Final Model Comparison](#final-model-comparison)
-* [2. Multivariate Linear Regression on California Housing Dataset](#2-multivariate-linear-regression-on-california-housing-dataset)
+* [Multivariate Linear Regression on California Housing Dataset](#multivariate-linear-regression-on-california-housing-dataset)
   * [Objective](#objective-1)
   * [Dataset Description](#dataset-description)
   * [Model Summary](#model-summary)
@@ -21,7 +21,7 @@
   * [Classification Results](#classification-results)
   * [Predictions](#predictions)
   * [Conclusion](#conclusion)
-* [3. Logistic Regression (Titanic Survival Prediction)](#3-logistic-regression)
+* [Logistic Regression](#logistic-regression)
   * [Task Overview](#task-overview)
   * [Concept](#concept)
   * [Results](#results)
@@ -29,12 +29,12 @@
   * [Predictions for New Data](#predictions-for-new-data)
   * [Observations](#observations)
   * [Conclusion](#conclusion-1)
-* [4. Machine Learning Classification Algorithms](#4-machine-learning-classification-algorithms)
+* [Machine Learning Classification Algorithms](#machine-learning-classification-algorithms)
   * [Naive Bayes Classifier](#naive-bayes-classifier)
   * [Decision Tree Classifier](#decision-tree-classifier)
   * [Random Forest Classifier](#random-forest-classifier)
-* [5. Synthetic Signal Generation for Power Quality Disturbance Analysis](#5-synthetic-signal-generation-for-power-quality-disturbance-analysis)
-* [6. Deep Learning Platform for Automatic Power Quality Disturbance (PQD) Classification](#6-deep-learning-platform-for-automatic-power-quality-disturbance-pqd-classification)
+* [Synthetic Signal Generation for Power Quality Disturbance Analysis](#synthetic-signal-generation-for-power-quality-disturbance-analysis)
+* [Deep Learning Platform for Automatic Power Quality Disturbance (PQD) Classification](#deep-learning-platform-for-automatic-power-quality-disturbance-pqd-classification)
   * [Core References & Datasets](#-core-references--datasets)
   * [Dataset Specifications](#-dataset-specifications)
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
@@ -43,7 +43,6 @@
   * [Evaluation Metrics (Pure CNN Baseline)](#-evaluation-metrics-pure-cnn-baseline)
 
 ---
-
 
 # Univariate Linear Regression using Gradient Descent
 
