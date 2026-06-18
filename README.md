@@ -38,7 +38,7 @@
   * [Core References & Datasets](#-core-references--datasets)
   * [Dataset Specifications](#-dataset-specifications)
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
-  * [Model Architecture & Specifications](#-model-architecture--specifications)
+  * [Model Architecture & Specifications](#pqd-model-specs)
   * [Network Summary](#-network-summary)
   * [Layer Breakdown](#-layer-breakdown)
   * [Training Strategy](#-training-strategy)
@@ -830,8 +830,7 @@ While the paper's architecture was powerful, the original repo implementation co
 4.  **Advanced Metrics Reports:** Integrated complete tracking systems post-training, outputting a precise text-based `classification_report` and a visual `seaborn` heatmapped confusion matrix on the unseen test dataset. Extracts and visualizes sample number **62** from test set for a quick live check
 
 ---
-## 🏗️ Model Architecture & Specifications
-
+## <a id="pqd-model-specs"></a>🏗️ Model Architecture & Specifications
 The core engine is a deep 1D Convolutional Neural Network (1D-CNN) engineered specifically for time-series signal classification. It processes raw voltage waveforms to automatically extract spatial and frequency features without requiring manual feature engineering (like Fourier Transforms).
 
 ### 📊 Network Summary
