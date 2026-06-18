@@ -38,6 +38,10 @@
   * [Core References & Datasets](#-core-references--datasets)
   * [Dataset Specifications](#-dataset-specifications)
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
+  * [🏗️ Model Architecture & Specifications](#-model-architecture--specifications)
+  * [📊 Network Summary](#-network-summary)
+  * [🧬 Layer Breakdown](#-layer-breakdown)
+  * [⚙️ Training Strategy](#-training-strategy)
   * [Key Architectural Nuances](#%EF%B8%8F-key-architectural-nuances)
   * [Evolutionary Feature Comparison Matrix](#-evolutionary-feature-comparison-matrix)
   * [Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)](#latest-run-metrics)---
@@ -823,9 +827,44 @@ While the paper's architecture was powerful, the original repo implementation co
 3.  **Coordinated Training Optimization Hooks:** The original repo relied on a fixed 43-epoch limit. The final script pairs two distinct training mechanics:
     * **Adaptive Learning Rate (The Steering Wheel):** Custom step-decay schedule starting at `alpha = 0.01` and cutting the rate in half every 10 epochs for tight convergence. This was present in the original repository code.
     * **Early Stopping (The Brakes):** Monitors validation loss with a roof of 100 epochs, `patience=10`, and `restore_best_weights=True`. If validation improvements stall, it cuts the loop and automatically rolls back model weights to the exact epoch that achieved peak performance.
-4.  **Advanced Metrics Reports:** Integrated complete tracking systems post-training, outputting a precise text-based `classification_report` and a visual `seaborn` heatmapped confusion matrix on the unseen test dataset.
+4.  **Advanced Metrics Reports:** Integrated complete tracking systems post-training, outputting a precise text-based `classification_report` and a visual `seaborn` heatmapped confusion matrix on the unseen test dataset. Extracts and visualizes sample number **62** from test set for a quick live check
 
 ---
+## 🏗️ Model Architecture & Specifications
+
+The core engine is a deep 1D Convolutional Neural Network (1D-CNN) engineered specifically for time-series signal classification. It processes raw voltage waveforms to automatically extract spatial and frequency features without requiring manual feature engineering (like Fourier Transforms).
+
+### 📊 Network Summary
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Model Type** | 1D Convolutional Neural Network (Sequential) |
+| **Input Shape** | `(100, 1)` (100 time-steps, 1 channel) |
+| **Output Shape** | `(17,)` (17 distinct Power Quality Disturbance classes) |
+| **Total Trainable Parameters** | 165,297 |
+| **Activation Functions** | Hidden Layers: `ReLU` \| Output Layer: `Softmax` |
+| **Loss Function** | `Categorical Crossentropy` |
+| **Optimizer** | `Nadam` (Adam with Nesterov Accelerated Momentum) |
+
+---
+
+### 🧬 Layer Breakdown
+
+The architecture is divided into three feature extraction blocks (Units) followed by a dense decision network:
+
+*   **Unit 1 (Micro-Patterns):** 2x `Conv1D` (32 filters, kernel size 3) $\rightarrow$ `MaxPool1D` $\rightarrow$ `BatchNormalization`
+*   **Unit 2 (Mid-Level Shapes):** 2x `Conv1D` (64 filters, kernel size 3) $\rightarrow$ `MaxPool1D` $\rightarrow$ `BatchNormalization`
+*   **Unit 3 (Macro-Features):** 2x `Conv1D` (128 filters, kernel size 3) $\rightarrow$ `GlobalMaxPooling1D` $\rightarrow$ `BatchNormalization`
+*   **Classification Head:** `Flatten` $\rightarrow$ `Dense` (256 units, ReLU) $\rightarrow$ `Dense` (128 units, ReLU) $\rightarrow$ `BatchNormalization` $\rightarrow$ `Dense` (17 units, Softmax)
+
+---
+
+### ⚙️ Training Strategy
+
+*   **Batch Size:** 64
+*   **Max Epochs:** 100 (Dynamic)
+*   **Step-Decay Learning Rate Scheduler:** Starts at `0.01`, dropping by a factor of `0.5` every 10 epochs to finely tune weights near convergence.
+*   **Early Stopping Monitor:** Tracks `val_loss` with a patience of 10 epochs. It automatically halts training to prevent overfitting and rolls back to restore the absolute best epoch's weights.
 
 ## 🛠️ Key Architectural Nuances
 
