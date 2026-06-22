@@ -34,18 +34,35 @@
   * [Decision Tree Classifier](#decision-tree-classifier)
   * [Random Forest Classifier](#random-forest-classifier)
 * [Synthetic Signal Generation for Power Quality Disturbance Analysis](#synthetic-signal-generation-for-power-quality-disturbance-analysis)
-* [CNN Platform for Automatic Power Quality Disturbance (PQD) Classification](#cnn-platform-for-automatic-power-quality-disturbance-pqd-classification)
-  * [Core References & Datasets](#-core-references--datasets)
-  * [Dataset Specifications](#-dataset-specifications)
-  * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
-  * [Model Architecture & Specifications](#pqd-model-specs)
-  * [Network Summary](#-network-summary)
-  * [Layer Breakdown](#-layer-breakdown)
-  * [Training Strategy](#-training-strategy)
-  * [Key Architectural Nuances](#%EF%B8%8F-key-architectural-nuances)
-  * [Evolutionary Feature Comparison Matrix](#-evolutionary-feature-comparison-matrix)
-  * [Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)](#latest-run-metrics)---
-
+- [📂 Dataset](#-dataset)
+- [📊 Comparative Analysis of the Five PQD Classification Models](#-comparative-analysis-of-the-five-pqd-classification-models)
+  - [Model 1: 1D CNN](#model-1-1d-cnn)
+    - [Overview](#overview)
+    - [Evolution of the Architecture](#evolution-of-the-architecture)
+    - [Model Structure](#model-structure)
+    - [Performance](#performance)
+  - [Model 2: Wavelet + Random Forest](#model-2-wavelet--random-forest)
+    - [Overview](#overview-1)
+    - [Model Structure](#model-structure-1)
+    - [Key Characteristics](#key-characteristics)
+    - [Performance](#performance-1)
+  - [Model 3: Parallel CNN + BiLSTM](#model-3-parallel-cnn--bilstm)
+    - [Overview](#overview-2)
+    - [Model Structure](#model-structure-2)
+    - [Key Characteristics](#key-characteristics-1)
+    - [Performance](#performance-2)
+  - [Model 4: CNN with Self-Attention](#model-4-cnn-with-self-attention)
+    - [Overview](#overview-3)
+    - [Model Structure](#model-structure-3)
+    - [Key Characteristics](#key-characteristics-2)
+    - [Performance](#performance-3)
+  - [Model 5: Global Sequence Modeler](#model-5-global-sequence-modeler)
+    - [Overview](#overview-4)
+    - [Model Structure](#model-structure-4)
+    - [Key Characteristics](#key-characteristics-3)
+    - [Performance](#performance-4)
+- [📈 Performance Summary](#performance-summary)
+- [🔍 Key Observations](#key-observations)
 # Univariate Linear Regression using Gradient Descent
 
 ## Objective
@@ -778,145 +795,162 @@ Python_code.py contains the code for synthetic waveform generation. Below are th
 
 <img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 14 07 PM" src="https://github.com/user-attachments/assets/5c91ea84-f3f6-4448-81dc-822eb4f89271" />
 
-# CNN Platform for Automatic Power Quality Disturbance (PQD) Classification
+# 📊 Comparative Analysis of the Five PQD Classification Models
 
-This repository features a production-ready, scale-invariant 1D Convolutional Neural Network (CNN) optimized to extract complex time-frequency features from raw voltage waveforms and automatically classify them across 17 distinct operational categories.
+## Dataset
 
----
+All five models were trained and evaluated on the **SEED Power Quality Disturbance (PQD) Dataset**, consisting of **17,000 balanced voltage waveforms** (1,000 samples for each of the 17 disturbance classes). A **70% / 15% / 15% stratified split** was used for training, validation, and testing to ensure fair and unbiased evaluation.
 
-## 📚 Core References & Datasets
-
-* **Dataset Source:** [SEED Power Quality Disturbance Dataset (Kaggle)](https://www.kaggle.com/datasets/sumairaziz/seed-power-quality-disturbance-dataset)
-* **Architecture Basis:** Model 1 from the [chachkes247/Power-Quality-Disturbances GitHub Repository](https://github.com/chachkes247/Power-Quality-Disturbances)
-* **Reference Paper:** *Deep Learning Algorithm for Automatic Classification of Power Quality Disturbances* by Fatema A. Albalooshi and M. R. Qader.
+**Dataset:** https://www.kaggle.com/datasets/sumairaziz/seed-power-quality-disturbance-dataset
 
 ---
 
-## 📈 Dataset Specifications
+# Model 1: 1D CNN
 
-The model is evaluated using a perfectly balanced variations pipeline:
-* **Total Scope:** 17,000 isolated signal waveforms (1,000 samples per class).
-* **Signal Geometry:** 100 time-steps per sample, configured as a 3D tensor: `(Samples, 100, 1)`.
-* **Target Classes (17):** Pure Sinusoidal, Sag, Swell, Interruption, Transient, Oscillatory Transient, Harmonics, Harmonics with Sag, Harmonics with Swell, Flicker, Flicker with Sag, Flicker with Swell, Sag with Oscillatory Transient, Swell with Oscillatory Transient, Sag with Harmonics, Swell with Harmonics, and Notch.
+## Overview
 
----
+A deep VGG-style 1D Convolutional Neural Network that performs end-to-end classification directly from raw voltage waveforms without manual feature engineering.
 
-## ⏳ Chronological Development & Architectural Evolution
+## Evolution of the Architecture
 
-The codebase progressed through three major iterations to maximize feature resolution, validation integrity, and generalization safety.
+The final model was developed through three iterations:
 
-### Step 1: The Initial Baseline (Lightweight Alternating CNN)
-* **Design:** Alternating layout structure (`Conv1D` ➔ `MaxPooling1D` ➔ `Conv1D`).
-* **Deficiencies:** Aggressive max-pooling strides cut down time-steps too quickly, erasing fine localized micro-anomalies (like sharp transient spikes or narrow notches). The terminal `Flatten()` layer tied the model to rigid input dimensions, causing compilation failures if the signal sequence window shifted.
+- **Initial CNN:** A lightweight alternating `Conv1D → MaxPooling → Conv1D` design that suffered from excessive downsampling and rigid input dimensions.
+- **Paper-based CNN:** Adopted the architecture from Albalooshi & Qader using stacked convolutional blocks, preserved temporal resolution, and a step-decay learning rate schedule that halves the learning rate every 10 epochs.
+- **Final implementation:** Modified to support the 17-class SEED CSV dataset, introduced a **70/15/15 stratified train-validation-test split**, incorporated **Early Stopping with best-weight restoration**, generated detailed evaluation reports, and utilized **Global Max Pooling** for improved scale invariance and robustness.
 
-### Step 2: Transition to Paper Architecture (Albalooshi & Qader)
-* **Design:** Upgraded to a deep, VGG-style modular network using **Model 1** from the reference repository.
-* **Why Model 1 over Model 2?** Model 1 provides a clean, pure spatial feature extraction baseline. Debugging and establishing peak performance on spatial filters first is critical before adding recurrent structures.
-* **Advantage:** Replaced alternating blocks with **Stacked Convolutions** (`Conv1D` ➔ `Conv1D` ➔ `MaxPool1D`). Stacking consecutive convolutions expands the network's receptive field, allowing it to capture complex, non-linear waveshape interactions before data is lost to pooling.
-* ** Future Roadmap Note:** A **BiLSTM (Bidirectional Long Short-Term Memory)** layer will be integrated directly beneath the final CNN unit block in the next phase. The CNN will process local geometric shapes while the BiLSTM tracks sequence context forwards and backwards, sharpening accuracy on complex hybrid categories (e.g., *Flicker_with_Sag*).
+## Model Structure
 
-### Step 3: Overhauling the Repository Code (Final Production Script)
-While the paper's architecture was powerful, the original repo implementation contained engineering flaws (naive index-slicing data splits, lack of training termination controls, and hardcoded `.mat` inputs). The original code was overhauled to create the final production-ready script through the following changes:
+- Stacked Conv1D blocks with Batch Normalization
+- ReLU activations
+- Global Max Pooling
+- Dense classification head
+- Softmax output layer
+- Nadam optimizer with dynamic learning rate scheduling
 
-1.  **SEED Dataset Compatibility & CSV Ingestion:** Rewrote the data layer to dynamically parse 17 individual unheaded `.csv` signal sheets via `pd.read_csv(file_name, header=None)`. Expanded array stacking and channel configurations to scale from the original 16 target classes to 17.
-2.  **Upgrading to a 3-Way Stratified Split:** The original repository used a basic, non-shuffled index slice to split data into Training and Validation sets, using the validation set for both training feedback and final score reports. The updated pipeline implements a rigorous double-stacked `train_test_split`:
-    * **Train (70% - 11,900 samples):** Calculates loss gradients and updates weights.
-    * **Validation (15% - 2,550 samples):** Evaluates mid-training optimization and guides callbacks.
-    * **Test (15% - 2,550 samples):** Kept completely isolated in a separate vault. Evaluated exactly once after training ends to generate true performance metrics.
-    * *Stratification ensures a uniform class distribution (700 / 150 / 150 samples per class) across all three splits.*
-3.  **Coordinated Training Optimization Hooks:** The original repo relied on a fixed 43-epoch limit. The final script pairs two distinct training mechanics:
-    * **Adaptive Learning Rate (The Steering Wheel):** Custom step-decay schedule starting at `alpha = 0.01` and cutting the rate in half every 10 epochs for tight convergence. This was present in the original repository code.
-    * **Early Stopping (The Brakes):** Monitors validation loss with a roof of 100 epochs, `patience=10`, and `restore_best_weights=True`. If validation improvements stall, it cuts the loop and automatically rolls back model weights to the exact epoch that achieved peak performance.
-4.  **Advanced Metrics Reports:** Integrated complete tracking systems post-training, outputting a precise text-based `classification_report` and a visual `seaborn` heatmapped confusion matrix on the unseen test dataset. Extracts and visualizes sample number **62** from test set for a quick live check
+## Performance
 
----
-## <a id="pqd-model-specs"></a>🏗️ Model Architecture & Specifications
-The core engine is a deep 1D Convolutional Neural Network (1D-CNN) engineered specifically for time-series signal classification. It processes raw voltage waveforms to automatically extract spatial and frequency features without requiring manual feature engineering (like Fourier Transforms).
-
-### 📊 Network Summary
-
-| Parameter | Specification |
-| :--- | :--- |
-| **Model Type** | 1D Convolutional Neural Network (Sequential) |
-| **Input Shape** | `(100, 1)` (100 time-steps, 1 channel) |
-| **Output Shape** | `(17,)` (17 distinct Power Quality Disturbance classes) |
-| **Total Trainable Parameters** | 165,297 |
-| **Activation Functions** | Hidden Layers: `ReLU` \| Output Layer: `Softmax` |
-| **Loss Function** | `Categorical Crossentropy` |
-| **Optimizer** | `Nadam` (Adam with Nesterov Accelerated Momentum) |
+- **Test Accuracy:** **98.16%**
+- Excellent overall performance and one of the best-performing architectures in this study.
 
 ---
 
-### 🧬 Layer Breakdown
+# Model 2: Wavelet + Random Forest
 
-The architecture is divided into three feature extraction blocks (Units) followed by a dense decision network:
+## Overview
 
-*   **Unit 1 (Micro-Patterns):** 2x `Conv1D` (32 filters, kernel size 3) $\rightarrow$ `MaxPool1D` $\rightarrow$ `BatchNormalization`
-*   **Unit 2 (Mid-Level Shapes):** 2x `Conv1D` (64 filters, kernel size 3) $\rightarrow$ `MaxPool1D` $\rightarrow$ `BatchNormalization`
-*   **Unit 3 (Macro-Features):** 2x `Conv1D` (128 filters, kernel size 3) $\rightarrow$ `GlobalMaxPooling1D` $\rightarrow$ `BatchNormalization`
-*   **Classification Head:** `Flatten` $\rightarrow$ `Dense` (256 units, ReLU) $\rightarrow$ `Dense` (128 units, ReLU) $\rightarrow$ `BatchNormalization` $\rightarrow$ `Dense` (17 units, Softmax)
+A traditional machine learning pipeline that first extracts Discrete Wavelet Transform (DWT) features and then classifies them using a Random Forest ensemble.
+
+## Model Structure
+
+- 3-level DWT feature extraction (`db4`)
+- Flattened wavelet coefficients
+- Random Forest classifier with multiple decision trees
+
+## Key Characteristics
+
+- Explicit frequency-domain feature engineering
+- Ensemble-based classification
+- Fast inference and interpretable compared to deep networks
+
+## Performance
+
+- **Test Accuracy:** **91.22%**
+- Performed well on many classes but was less effective than deep learning models for complex hybrid disturbances.
 
 ---
 
-### ⚙️ Training Strategy
+# Model 3: Parallel CNN + BiLSTM
 
-*   **Batch Size:** 64
-*   **Max Epochs:** 100 (Dynamic)
-*   **Step-Decay Learning Rate Scheduler:** Starts at `0.01`, dropping by a factor of `0.5` every 10 epochs to finely tune weights near convergence.
-*   **Early Stopping Monitor:** Tracks `val_loss` with a patience of 10 epochs. It automatically halts training to prevent overfitting and rolls back to restore the absolute best epoch's weights.
+## Overview
 
-## 🛠️ Key Architectural Nuances
+A hybrid deep learning architecture combining convolutional feature extraction with bidirectional sequence modeling.
 
-* **Scale Invariance via Global Max Pooling:** The legacy `Flatten()` layer was replaced with `GlobalMaxPooling1D()`. Instead of blindly smashing sequence indices together, global pooling scans each feature channel and extracts only its single highest activation value. This decouples the network from fixed input dimensions, allowing it to process 100-sample sequences or wider 640-sample sequences without dimensional errors. (Present in the original repo code)
-* **Stride Invariance in Pooling:** Intermediate max-pooling layers use a custom configuration (`pool_size=3, strides=1`). This allows the filters to smooth local wave noise while keeping the spatial timeline resolution completely intact until the global pooling layer at the very end.(Present in the original repo code)
+## Model Structure
+
+- Parallel CNN branch
+- Parallel Bidirectional LSTM branch
+- Feature fusion
+- Dense classification layers
+
+## Key Characteristics
+
+- CNN extracts local waveform features
+- BiLSTM captures long-range temporal dependencies in both directions
+- Combines spatial and sequential information effectively
+
+## Performance
+
+- **Test Accuracy:** **98.27%**
+- Highest-performing model among all five evaluated architectures.
 
 ---
 
-## 📊 Evolutionary Feature Comparison Matrix
+# Model 4: CNN with Self-Attention
 
-| Design Vector | 1. Original Baseline | 2. Reference Repository Code | 3. Final Production Script |
-| :--- | :--- | :--- | :--- |
-| **Architectural Style** | Traditional / Lightweight | Deep Modular VGG-like | Deep Modular VGG-like |
-| **Convolution Pattern**| Alternating (`Conv`➔`Pool`) | Stacked (`Conv`➔`Conv`➔`Pool`) | Stacked (`Conv`➔`Conv`➔`Pool`) |
-| **Temporal Resolution**| Aggressive downsampling | Preserved resolution (`strides=1`) | Preserved resolution (`strides=1`) |
-| **Input Flexibiliy** | Rigid (Hardcoded sequence size)| Scale-Invariant (`GlobalMaxPool`) | Scale-Invariant (`GlobalMaxPool`) |
-| **Data Split Type** | 2-Way Random Split | Naive Fixed Index Slicing | **3-Way Stratified Split** |
-| **Final Evaluation** | Shared Validation Split | Shared Validation Split | **Isolated Vault Test Set** |
-| **Optimization Hook** | Static Learning Rate (Adam) | Custom Step-Decay Scheduler (Nadam)| **Step-Decay + Early Stopping + Weight Rollback** |
-| **Target Scale** | Customized 17 Classes | Original 16 MATLAB Classes | **Customized 17 CSV Classes (SEED)** |
+## Overview
 
+An extension of the CNN architecture that incorporates a self-attention mechanism to emphasize the most informative regions of each waveform.
 
-## <a name="latest-run-metrics"></a>📊 Evaluation Metrics of Latest Run on Thu Jun 18 10:52:05 (Pure CNN Baseline)
+## Model Structure
 
-Calculated entirely on the isolated, unseen **Test Set Vault** at peak performance weights:
+- CNN feature extractor
+- Self-Attention layer
+- Dense classification head
 
-* **True Model Test Accuracy:** 97.84%
-* **Early Stopping Trigger:** Terminated at Epoch 60 (Restored to Epoch 50 weights)
-* **Best Validation Loss:** 0.0769
-* 
+## Key Characteristics
 
-### Unbiased Test Classification Report
-```text
-                                  precision    recall  f1-score   support
+- Learns to focus on important temporal regions
+- Improves feature weighting automatically
+- Designed for complex PQD recognition
 
-                 Pure_Sinusoidal       1.00      1.00      1.00       150
-                             Sag       0.97      1.00      0.99       150
-                           Swell       0.97      1.00      0.99       150
-                    Interruption       1.00      0.99      0.99       150
-                       Transient       0.95      0.97      0.96       150
-           Oscillatory_Transient       0.92      0.95      0.93       150
-                       Harmonics       1.00      1.00      1.00       150
-              Harmonics_with_Sag       0.99      0.98      0.98       150
-            Harmonics_with_Swell       1.00      0.98      0.99       150
-                         Flicker       0.99      1.00      1.00       150
-                Flicker_with_Sag       0.95      0.98      0.97       150
-              Flicker_with_Swell       0.99      0.97      0.98       150
-  Sag_with_Oscillatory_Transient       0.98      0.92      0.95       150
-Swell_with_Oscillatory_Transient       0.97      0.95      0.96       150
-              Sag_with_Harmonics       0.98      0.99      0.98       150
-            Swell_with_Harmonics       0.97      0.97      0.97       150
-                           Notch       0.99      0.98      0.99       150
+## Performance
 
-                        accuracy                           0.98      2550
-                       macro avg       0.98      0.98      0.98      2550
-                    weighted avg       0.98      0.98      0.98      2550
+- **Test Accuracy:** **91.18%**
+- Achieved competitive performance but did not surpass the baseline CNN.
+
+---
+
+# Model 5: Global Sequence Modeler
+
+## Overview
+
+A Transformer-inspired architecture using positional embeddings and multi-head attention to model entire sequences globally.
+
+## Model Structure
+
+- Positional embeddings
+- Multi-head self-attention blocks
+- Residual connections
+- Global pooling and dense classifier
+
+## Key Characteristics
+
+- Captures global dependencies across the signal
+- Eliminates recurrent computations
+- Attention-driven sequence modeling
+
+## Performance
+
+- **Test Accuracy:** **83.61%**
+- Underperformed compared to CNN-based approaches on the relatively short 100-sample PQD sequences.
+
+---
+
+# Performance Summary
+
+| Model | Test Accuracy |
+|--------|--------------:|
+| Parallel CNN + BiLSTM | **98.27%** |
+| 1D CNN | **98.16%** |
+| Wavelet + Random Forest | **91.22%** |
+| CNN + Self-Attention | **91.18%** |
+| Global Sequence Modeler | **83.61%** |
+
+## Key Observations
+
+- **Parallel CNN + BiLSTM** achieved the highest classification accuracy.
+- The **1D CNN** closely matched the best result while maintaining a simpler architecture.
+- **Wavelet + Random Forest** demonstrated that handcrafted features remain competitive but lag behind deep learning on complex PQDs.
+- **CNN with Self-Attention** performed similarly to the Random Forest pipeline but did not improve upon the baseline CNN.
+- The **Global Sequence Modeler** was the weakest performer, indicating that attention-only architectures may require longer sequences or larger datasets for optimal effectiveness.
