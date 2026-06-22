@@ -34,7 +34,7 @@
   * [Decision Tree Classifier](#decision-tree-classifier)
   * [Random Forest Classifier](#random-forest-classifier)
 * [Synthetic Signal Generation for Power Quality Disturbance Analysis](#synthetic-signal-generation-for-power-quality-disturbance-analysis)
-* [Deep Learning Platform for Automatic Power Quality Disturbance (PQD) Classification](#deep-learning-platform-for-automatic-power-quality-disturbance-pqd-classification)
+* [CNN Platform for Automatic Power Quality Disturbance (PQD) Classification](#cnn-platform-for-automatic-power-quality-disturbance-pqd-classification)
   * [Core References & Datasets](#-core-references--datasets)
   * [Dataset Specifications](#-dataset-specifications)
   * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
