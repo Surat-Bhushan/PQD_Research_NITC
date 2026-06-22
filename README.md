@@ -35,7 +35,6 @@
   * [Random Forest Classifier](#random-forest-classifier)
 * [Synthetic Signal Generation for Power Quality Disturbance Analysis](#synthetic-signal-generation-for-power-quality-disturbance-analysis)
 - [📊 Comparative Analysis of the Five PQD Classification Models](#-comparative-analysis-of-the-five-pqd-classification-models)
-  -[📂 Dataset](#-dataset)
   - [Model 1: 1D CNN](#model-1-1d-cnn)
     - [Overview](#overview)
     - [Evolution of the Architecture](#evolution-of-the-architecture)
@@ -818,6 +817,7 @@ The final model was developed through three iterations:
 - **Initial CNN:** A lightweight alternating `Conv1D → MaxPooling → Conv1D` design that suffered from excessive downsampling and rigid input dimensions.
 - **Paper-based CNN:** Adopted the architecture from Albalooshi & Qader using stacked convolutional blocks, preserved temporal resolution, and a step-decay learning rate schedule that halves the learning rate every 10 epochs.
 - **Final implementation:** Modified to support the 17-class SEED CSV dataset, introduced a **70/15/15 stratified train-validation-test split**, incorporated **Early Stopping with best-weight restoration**, generated detailed evaluation reports, and utilized **Global Max Pooling** for improved scale invariance and robustness.
+- [* **Architecture Basis:** Model 1 from the [chachkes247/Power-Quality-Disturbances GitHub Repository](https://github.com/chachkes247/Power-Quality-Disturbances) * **Reference Paper:** *Deep Learning Algorithm for Automatic Classification of Power Quality Disturbances* by Fatema A. Albalooshi and M. R. Qader.]
 
 ## Model Structure
 
