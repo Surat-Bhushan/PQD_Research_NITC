@@ -60,8 +60,9 @@
     - [Model Structure](#model-structure-4)
     - [Key Characteristics](#key-characteristics-3)
     - [Performance](#performance-4)
-- [📈 Performance Summary](#performance-summary)
-- [🔍 Key Observations](#key-observations)
+  - [📈 Performance Summary](#performance-summary)
+  - [🔍 Key Observations](#key-observations)
+-[Author] (#author)
 # Univariate Linear Regression using Gradient Descent
 
 ## Objective
@@ -954,3 +955,7 @@ A Transformer-inspired architecture using positional embeddings and multi-head a
 - **Wavelet + Random Forest** demonstrated that handcrafted features remain competitive but lag behind deep learning on complex PQDs.
 - **CNN with Self-Attention** performed similarly to the Random Forest pipeline but did not improve upon the baseline CNN.
 - The **Global Sequence Modeler** was the weakest performer, indicating that attention-only architectures may require longer sequences or larger datasets for optimal effectiveness.
+
+# Author
+## Surat Bhushan (2026)
+(During internship at NIT Calicut, under the guidance of Dr. Gangireddy Narendra kumar Reddy, Assistant Professor in the Department of ECE, NIT Calicut.)
