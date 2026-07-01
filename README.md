@@ -1,4 +1,4 @@
-# 📑 Table of Contents
+# Table of Contents
 
 * [Univariate Linear Regression using Gradient Descent](#univariate-linear-regression-using-gradient-descent)
   * [Objective](#objective)
@@ -34,7 +34,7 @@
   * [Decision Tree Classifier](#decision-tree-classifier)
   * [Random Forest Classifier](#random-forest-classifier)
 * [Synthetic Signal Generation for Power Quality Disturbance Analysis](#synthetic-signal-generation-for-power-quality-disturbance-analysis)
-- [📊 Comparative Analysis of the Five PQD Classification Models](#-comparative-analysis-of-the-five-pqd-classification-models)
+- [Comparative Analysis of the Five PQD Classification Models](#-comparative-analysis-of-the-five-pqd-classification-models)
   - [Model 1: 1D CNN](#model-1-1d-cnn)
     - [Overview](#overview)
     - [Evolution of the Architecture](#evolution-of-the-architecture)
@@ -60,8 +60,8 @@
     - [Model Structure](#model-structure-4)
     - [Key Characteristics](#key-characteristics-3)
     - [Performance](#performance-4)
-  - [📈 Performance Summary](#performance-summary)
-  - [🔍 Key Observations](#key-observations)
+  - [Performance Summary](#performance-summary)
+  - [Key Observations](#key-observations)
 -[Author] (#author)
 # Univariate Linear Regression using Gradient Descent
 
