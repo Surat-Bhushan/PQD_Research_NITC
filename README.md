@@ -62,7 +62,7 @@
     - [Performance](#performance-4)
   - [Performance Summary](#performance-summary)
   - [Key Observations](#key-observations)
--[Author] (#author)
+- [Author] (#author)
 # Univariate Linear Regression using Gradient Descent
 
 ## Objective
