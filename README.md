@@ -62,7 +62,10 @@
     - [Performance](#performance-4)
   - [Performance Summary](#performance-summary)
   - [Key Observations](#key-observations)
-- [Author] (#author)
+  - [Model Comparison Table](#model-comparison-table)
+  - [Summary of the Five Models](#summary-of-the-five-models)
+  - [Increasing Model Complexity](#increasing-model-complexity)
+- [Author](#author)
 # Univariate Linear Regression using Gradient Descent
 
 ## Objective
@@ -955,6 +958,80 @@ A Transformer-inspired architecture using positional embeddings and multi-head a
 - **Wavelet + Random Forest** demonstrated that handcrafted features remain competitive but lag behind deep learning on complex PQDs.
 - **CNN with Self-Attention** performed similarly to the Random Forest pipeline but did not improve upon the baseline CNN.
 - The **Global Sequence Modeler** was the weakest performer, indicating that attention-only architectures may require longer sequences or larger datasets for optimal effectiveness.
+
+## Comparative Analysis of the Five Power Quality Disturbance (PQD) Classification Models
+
+| Feature | **Model 1**<br>1D CNN | **Model 2**<br>DWT + Random Forest | **Model 3**<br>Parallel CNN + BiLSTM | **Model 4**<br>CNN + Self-Attention | **Model 5**<br>Transformer |
+|---------|-------------------------|------------------------------------|--------------------------------------|--------------------------------------|-----------------------------|
+| **Model Type** | Deep Learning | Traditional Machine Learning | Hybrid Deep Learning | Deep Learning | Deep Learning |
+| **Feature Extraction** | Automatic (CNN) | Handcrafted (Wavelet Features) | CNN + BiLSTM | CNN + Self-Attention | Transformer Self-Attention |
+| **Input** | Raw Signal | Raw Signal | Raw Signal | Raw Signal | Raw Signal |
+| **Signal Length** | 100 Samples | 100 Samples | 100 Samples | 100 Samples | 100 Samples |
+| **Number of Classes** | 17 | 17 | 17 | 17 | 17 |
+| **Training Samples** | 17,000 | 17,000 | 17,000 | 17,000 | 17,000 |
+| **Train / Val / Test Split** | 70% / 15% / 15% | 70% / 15% / 15% | 70% / 15% / 15% | 70% / 15% / 15% | 70% / 15% / 15% |
+| **Main Learning Strategy** | Local feature extraction | Time-frequency feature extraction + Ensemble learning | Local + Temporal feature learning | Local feature extraction + Attention | Global sequence modeling |
+| **Main Architecture** | Conv1D Network | Wavelet + Random Forest | Parallel CNN + BiLSTM | CNN + Self-Attention | Transformer Encoder |
+| **CNN Filters** | 32 → 64 → 128 | — | 32 → 64 | 32 → 64 → 128 | Conv1D Embedding (64 Filters) |
+| **Kernel Size** | 3 | — | 3 | 3 | 3 |
+| **BiLSTM Units** | — | — | 32 → 64 | — | — |
+| **Attention Mechanism** | No | No | No | Self-Attention | Multi-Head Self-Attention |
+| **Transformer Encoder** | No | No | No | No | 2 Encoder Blocks |
+| **Attention Heads** | — | — | — | — | 4 |
+| **Head Size** | — | — | — | — | 64 |
+| **Feed Forward Dimension** | — | — | — | — | 64 |
+| **Wavelet Type** | — | Daubechies 4 (db4) | — | — | — |
+| **Wavelet Decomposition Level** | — | 3 | — | — | — |
+| **Random Forest Trees** | — | 200 | — | — | — |
+| **Pooling Layer** | Global Max Pooling | — | Global Max Pooling | Global Average Pooling | Global Average Pooling |
+| **Dense Layers** | 256 → 128 | — | 256 → 128 | 256 → 128 | 128 |
+| **Output Layer** | Softmax (17) | Random Forest Voting | Softmax (17) | Softmax (17) | Softmax (17) |
+| **Loss Function** | Categorical Cross-Entropy | — | Categorical Cross-Entropy | Categorical Cross-Entropy | Categorical Cross-Entropy |
+| **Optimizer** | Nadam | — | Nadam | Nadam | Nadam |
+| **Batch Size** | 64 | — | 64 | 64 | 64 |
+| **Maximum Epochs** | 100 | — | 100 | 100 | 100 |
+| **Learning Rate** | 0.01 (halved every 10 epochs) | — | 0.01 (halved every 10 epochs) | 0.01 (halved every 10 epochs) | 0.01 (halved every 10 epochs) |
+| **Early Stopping** | Patience = 10 | Not Used | Patience = 10 | Patience = 10 | Patience = 10 |
+| **Strength** | Learns local waveform patterns efficiently | Excellent time-frequency representation with fast training | Combines local and temporal information | Focuses on the most informative signal regions | Captures long-range dependencies across the entire signal |
+| **Limitation** | Cannot model long-range dependencies well | Feature engineering required; cannot learn features automatically | Higher computational complexity | Attention increases computational cost | Highest computational complexity and training time |
+
+---
+
+## Summary of the Five Models
+
+| Model | Best At | Main Idea |
+|--------|----------|-----------|
+| **Model 1 – 1D CNN** | Learning local waveform patterns | Uses convolutional filters to automatically extract features from raw PQD signals. |
+| **Model 2 – DWT + Random Forest** | Time-frequency analysis | Converts signals into wavelet features and classifies them using an ensemble of 200 decision trees. |
+| **Model 3 – Parallel CNN + BiLSTM** | Combining spatial and temporal information | CNN learns local features while BiLSTM learns temporal dependencies simultaneously. |
+| **Model 4 – CNN + Self-Attention** | Highlighting important signal regions | Uses attention to assign higher importance to informative parts of the waveform before classification. |
+| **Model 5 – Transformer** | Global sequence modeling | Uses multi-head self-attention to learn relationships between all time steps in the signal simultaneously. |
+
+---
+
+### Increasing Model Complexity
+
+```text
+DWT + Random Forest
+        │
+        ▼
+1D CNN
+        │
+        ▼
+CNN + Self-Attention
+        │
+        ▼
+CNN + BiLSTM
+        │
+        ▼
+Transformer
+```
+
+- **Model 1** learns local spatial features.
+- **Model 2** relies on handcrafted wavelet features instead of learned features.
+- **Model 3** adds temporal sequence learning using BiLSTMs.
+- **Model 4** adds attention to focus on important waveform regions.
+- **Model 5** replaces convolution/LSTM-based sequence learning with global multi-head self-attention, allowing every time step to interact with every other time step.
 
 # Author
 ## Surat Bhushan (2026)
