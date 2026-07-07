@@ -1042,6 +1042,8 @@ This section provides a performance evaluation and specifications summary of the
 
 To bridge the performance cliff observed in standard networks, the model's architecture was updated with wider receptive fields (`kernel_size=7`), `SpatialDropout1D`, and localized `GaussianNoise` injection layers to inherently smooth out stochastic variance.
 
+best_model_with_noise_analysis.py file containts the parallel CNN BiLSTM model along with code for noise analysis.
+
 ---
 
 ## 📊 Noise Testing Specifications
