@@ -65,7 +65,9 @@
   - [Performance Summary](#performance-summary)
   - [Key Observations](#key-observations)
   - [Model Comparison Table](#model-comparison-table)
+- [Structural Noise Robustness Analysis](#structural-noise-robustness-analysis)
 - [Author](#author)
+
 # Univariate Linear Regression using Gradient Descent
 
 ## Objective
@@ -1034,6 +1036,65 @@ Transformer
 | **Limitation** | Cannot model long-range dependencies well | Feature engineering required; cannot learn features automatically | Higher computational complexity | Attention increases computational cost | Highest computational complexity and training time |
 
 ---
+# Structural Noise Robustness Analysis
+
+This section provides a performance evaluation and specifications summary of the structurally hardened **Parallel CNN || BiLSTM** model, trained on **unaugmented, raw seed data**.
+
+To bridge the performance cliff observed in standard networks, the model's architecture was updated with wider receptive fields (`kernel_size=7`), `SpatialDropout1D`, and localized `GaussianNoise` injection layers to inherently smooth out stochastic variance.
+
+---
+
+## 📊 Noise Testing Specifications
+
+| Parameter | Value / Range | Description |
+| :--- | :--- | :--- |
+| **Training Constraint** | Strict Raw Seed Data | No data augmentation or file-level preprocessing allowed |
+| **Target Dataset** | Unseen Test Split (15%) | 2,550 isolated signal samples |
+| **Signal Length ($N$)**| 100 Time Steps | 1D time-series vectors |
+| **Noise Profile** | Gaussian Distribution ($\mu = 0$) | Zero-mean white noise scaled dynamically per sample |
+| **Structural Fixes** | Macro-Kernels & Spatial Dropout | Replaced narrow filters to capture macro-contours |
+
+---
+
+## 🧮 Mathematical Framework
+
+The AWGN generator dynamically calculates the instantaneous power of each individual waveform. This ensures that voltage drops (e.g., *Sags*, *Interruptions*) and high-energy transients are degraded proportionally without destroying low-amplitude signal definitions.
+
+The noise power for any given target Signal-to-Noise Ratio (SNR in dB) is determined by:
+
+1. **Signal Power ($P_{\text{signal}}$):**
+   $$P_{\text{signal}} = \frac{1}{N} \sum_{t=1}^{N} x(t)^2$$
+
+2. **Linear SNR Scale ($SNR_{\text{linear}}$):**
+   $$SNR_{\text{linear}} = 10^{\left(\frac{SNR_{\text{dB}}}{10}\right)}$$
+
+3. **Required Noise Power ($P_{\text{noise}}$):**
+   $$P_{\text{noise}} = \frac{P_{\text{signal}}}{SNR_{\text{linear}}}$$
+
+---
+
+## 📝 Empirical Performance Log
+
+* **Baseline Clean Test Accuracy:** `93.65%` (Weights restored from optimal Epoch 81)
+
+| Evaluation Run | Noise Level (SNR) | Observed Test Accuracy | Operational Status |
+| :---: | :---: | :---: | :--- |
+| Control | **Clean (No Noise)** | **93.65%** | Nominal Benchmark |
+| Run 5 | **50 dB** | **93.69%** | Fully Immune |
+| Run 4 | **40 dB** | **93.73%** | Fully Immune |
+| Run 3 | **30 dB** | **93.69%** | Fully Immune (Substation Standard) |
+| Run 2 | **20 dB** | **81.14%** | Resilient / Active Industrial Deployment |
+| Run 1 | **10 dB** | **23.53%** | Degraded (Severe Environmental Static) |
+
+---
+
+## 🔍 Validation & Architectural Insights
+
+By altering the feature extraction mechanism instead of changing the source training data, the network achieved industrial-grade stability:
+
+1. **Receptive Field Optimization:** Transitioning to a `kernel_size=7` configuration allowed the Conv1D paths to compute moving averages over raw data points. High-frequency noise is filtered out natively, letting the network maintain **>93% accuracy** down to a harsh $30\text{ dB}$ ambient environment.
+2. **Mitigation of Sequential Fragility:** Incorporating Spatial Dropout and input layer Gaussian regularization prevented the BiLSTM path from memorizing hyper-precise synthetic trajectories. The network learned generalized geometric shapes rather than exact mathematical point paths.
+3. **Convergence Dynamics:** Due to the heavier regularization framework, the network required more epochs to converge ($81$ epochs vs $32$ epochs originally). However, the resulting decision boundaries are significantly more robust, eliminating the fragile performance drop-offs seen in standard architectures.
 
 # Author
 ## Surat Bhushan (2026)
