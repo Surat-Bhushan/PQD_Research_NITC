@@ -1035,6 +1035,10 @@ Transformer
 | **Strength** | Learns local waveform patterns efficiently | Excellent time-frequency representation with fast training | Combines local and temporal information | Focuses on the most informative signal regions | Captures long-range dependencies across the entire signal |
 | **Limitation** | Cannot model long-range dependencies well | Feature engineering required; cannot learn features automatically | Higher computational complexity | Attention increases computational cost | Highest computational complexity and training time |
 
+## Terminal Graphs of Model3 -
+<img width="473" height="311" alt="Screenshot 2026-07-07 at 4 21 35 PM" src="https://github.com/user-attachments/assets/e45a9a79-4910-4a28-8df2-c2d0af2adca3" />
+<img width="877" height="564" alt="Screenshot 2026-07-07 at 4 21 47 PM" src="https://github.com/user-attachments/assets/79ba3d67-bf1c-4b6d-8bd9-dafed6cb1c8c" />
+
 ---
 # Structural Noise Robustness Analysis
 
