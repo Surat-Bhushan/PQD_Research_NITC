@@ -1131,7 +1131,6 @@ By altering the feature extraction mechanism instead of changing the source trai
 2. **Mitigation of Sequential Fragility:** Incorporating Spatial Dropout and input layer Gaussian regularization prevented the BiLSTM path from memorizing hyper-precise synthetic trajectories. The network learned generalized geometric shapes rather than exact mathematical point paths.
 3. **Convergence Dynamics:** Due to the heavier regularization framework, the network required more epochs to converge ($81$ epochs vs $32$ epochs originally). However, the resulting decision boundaries are significantly more robust, eliminating the fragile performance drop-offs seen in standard architectures.
 <img width="772" height="485" alt="Screenshot 2026-07-07 at 6 26 56 AM" src="https://github.com/user-attachments/assets/7173ea86-a5c1-4c8e-98c8-fac2801f7802" />
-<img width="772" height="485" alt="Screenshot 2026-07-07 at 6 26 56 AM" src="https://github.com/user-attachments/assets/3e75dbea-a003-4878-a553-cf82fd0ada89" />
 
 # Author
 ## Surat Bhushan (2026)
