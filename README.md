@@ -1066,6 +1066,7 @@ Transformer
 <img width="877" height="564" alt="Screenshot 2026-07-07 at 4 21 47 PM" src="https://github.com/user-attachments/assets/79ba3d67-bf1c-4b6d-8bd9-dafed6cb1c8c" />
 
 #### (Similarly there are outputs of rest of the 4 models.)
+### The terminal output containing the detailed snapshot of model training and testing period is available in the file Termainl_Saved_Output.txt in this repo, for all five models. For in depth detial of model behaviour, that file can be referred
 
 ---
 # Structural Noise Robustness Analysis
