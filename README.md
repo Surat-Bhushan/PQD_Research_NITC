@@ -1,4 +1,4 @@
-# Table of Contents
+<img width="574" height="623" alt="image" src="https://github.com/user-attachments/assets/4893e904-b4e6-4893-bfd7-b5e0fda00b32" /># Table of Contents
 
 * [Univariate Linear Regression using Gradient Descent](#univariate-linear-regression-using-gradient-descent)
   * [Objective](#objective)
@@ -34,6 +34,7 @@
   * [Decision Tree Classifier](#decision-tree-classifier)
   * [Random Forest Classifier](#random-forest-classifier)
 * [Synthetic Signal Generation for Power Quality Disturbance Analysis](#synthetic-signal-generation-for-power-quality-disturbance-analysis)
+* [Literature Review](#literature-review)
 - [Comparative Analysis of the Five PQD Classification Models](#-comparative-analysis-of-the-five-pqd-classification-models)
   - [Model 1: 1D CNN](#model-1-1d-cnn)
     - [Overview](#overview)
@@ -792,6 +793,31 @@ Random Forest reduces overfitting by averaging the predictions of many trees, re
 - Handles complex relationships effectively
 
 ---
+## Literature Review
+
+To understand the research done in the domain of automatic power quality disturbance detection and classification, I read 18 research papers. Below is a summarised literature review of the same. For more detials kindly refer Complete_Document file present in this repository.
+
+| Paper | Authors | Year | Methodology | Dataset | Key Contribution | Limitation |
+|:------|:--------|:----:|:------------|:--------|:-----------------|:-----------|
+| **Optimally Detecting and Classifying the Transmission Line Fault in Power System Using Hybrid Technique** | P. Rajesh, R. Kannan, J. Vishnupriyan, B. Rajani | 2022 | TSVD + HUA-Optimized RPNN | MATLAB/Simulink 400 kV transmission line dataset (11 fault classes) | Robust hybrid fault classification using TSVD feature extraction and optimized RPNN. | Evaluated only on simulated data; computationally expensive. |
+| **A Critical Analysis of Methodologies for Detection and Classification of Power Quality Events in Smart Grid** | Rajender Kumar Beniwal, Manish Kumar Saini, Anand Nayyar, Basit Qureshi, Akanksha Aggarwal | 2021 | Comprehensive Survey | IEEE 1159 / IEC 61000-4-30 literature | Reviews conventional and deep learning PQD methods and identifies research gaps. | No proposed algorithm; survey paper only. |
+| **A Generalized Classification Framework for Power Quality Disturbances Based on Synchrosqueezed Wavelet Transform and Convolutional Neural Networks** | Y. S. Upendra Vishwanath, S. Esakkirajan, B. Keerthiveena, Ram Bilas Pachori | 2023 | SWT + EfficientNetB0 CNN | IEEE 1159 synthetic dataset (15 classes) | Robust image-based PQD classification using Synchrosqueezed Wavelet Transform. | Performance decreases under extremely low SNR. |
+| **A New Method With Hilbert Transform and Slip-SVD-Based Noise-Suppression Algorithm for Noisy Power Quality Monitoring** | Yan Wang, Qunzhan Li, Fulin Zhou, Yang Zhou, Xiuqing Mu | 2019 | Hilbert Transform + Slip-SVD | Synthetic & practical power-grid data | Rule-based PQ monitoring with effective noise suppression. | Depends on manually selected thresholds. |
+| **A Novel Recognition Method for Complex Power Quality Disturbances Based on Visualization Trajectory Circle and Machine Vision** | Ding Yuan, Yulong Liu, Mingyang Lan, Tao Jin, Mohamed A. Mohamed | 2022 | Improved Hilbert Transform + Trajectory Circle + ResNet50 | Synthetic dataset + RT-LAB microgrid | Converts PQ signals into trajectory images for CNN classification. | Additional preprocessing overhead. |
+| **A Systematic Review of Real-Time Detection and Classification of Power Quality Disturbances** | Systematic Review | 2023 | Literature Review | 179 papers selected from 4,068 studies | Reviews real-time PQD detection methods and future research directions. | No new algorithm proposed. |
+| **Deep Learning Algorithm for Automatic Classification of Power Quality Disturbances** | Fatema A. Albalooshi, M. R. Qader | 2025 | Multi-scale 1D CNN + Attention | Synthetic MATLAB dataset | End-to-end feature learning without manual feature extraction. | Mostly validated on synthetic data. |
+| **Complex PQD Classification Using Time-Frequency Analysis and Multiscale Parallel Attention Residual Network** | J. Ma et al. | 2024 | Modified S-Transform + MPARN | Synthetic 32-class dataset | Attention-based recognition of complex PQDs. | Large model size and computational complexity. |
+| **Detection and Classification of Multiple Power Quality Disturbances Using Stockwell Transform and Deep Learning** | Chenhui Cui, Yujie Duan, Hongli Hu, Liang Wang, Qing Liu | 2022 | Optimized Stockwell Transform + CNN | MATLAB-generated 37-class dataset | Accurate classification of multiple simultaneous disturbances. | Large image generation increases memory usage. |
+| **Power Quality Disturbance Recognition Using Empirical Wavelet Transform and Feature Selection** | Shihan Chen, Zichie Li, Guobing Pan, Fang Xu | 2022 | EWT + ReliefF + SVM | IEEE 1159 synthetic dataset | Adaptive wavelet decomposition with feature selection. | Sensitive to decomposition parameters. |
+| **Power Quality Disturbance Classification Based on Parallel Fusion of CNN and GRU** | Jiajun Cai, Kai Zhang, Hui Jiang | 2023 | Parallel CNN-GRU + Attention | IEEE 1159 synthetic dataset | Joint spatial and temporal feature extraction improves accuracy. | Higher computational cost than standalone models. |
+| **A Comprehensive Review of Deep-Learning Applications to Power Quality Analysis** | Indu Sekhar Samanta, Subhasis Panda, Pravat Kumar Rout, Mohit Bajaj, et al. | 2023 | Review | IEEE 1159 benchmark datasets | Comprehensive overview of deep learning techniques for PQ analysis. | Mostly reviews synthetic-data-based research. |
+| **Hierarchical Convolutional Neural Networks for Event Classification on PMU Measurements** | Martin Pavlovski, Mohammad Alqudah, Tatjana Dokic, Ameen Abdel Hai, Mladen Kezunovic, Zoran Obradovic | 2021 | Hierarchical CNN | Real-world PMU datasets | Efficient hierarchical event classification from PMU measurements. | Not designed for high-frequency PQ disturbances. |
+| **Hybrid S-Transform and Kalman Filtering Approach for Detection and Measurement of Short Duration Disturbances in Power Networks** | P. K. Dash, M. V. Chilukuri | 2004 | S-Transform + Extended Kalman Filter | Simulated & laboratory validation | Early hybrid signal-processing approach for PQ monitoring. | Computationally intensive. |
+| **Power Quality Disturbances Detection and Classification Based on Deep Convolution Auto-Encoder Networks** | Paras Khetarpal, Neelu Nagpal, Mohammed S. Al-Numay, Pierluigi Siano, Yogendra Arya, Neelam Kassarwani | 2023 | Deep Convolutional Sparse Autoencoder | Synthetic 15-class dataset | Learns compact latent representations automatically. | High memory requirement due to image conversion. |
+| **Power Quality Disturbances Recognition via Lightweight Deep Learning Framework Integrated With Time-Frequency Analysis Embedded** | Jun Yang, Zhenyu Liu, Yingjie Lei, et al. | 2024 | MEMNet + Morlet Wavelet Convolution | Synthetic 32-class dataset | Lightweight embedded framework for real-time PQD recognition. | Sensitive to wavelet parameter initialization. |
+| **Perception of Power Quality Disturbances Using Fourier, Short-Time Fourier, Continuous and Discrete Wavelet Transforms** | M. S. Priyadarshini, Mohit Bajaj, Lukas Prokop, Milijas Berahnu | 2024 | Comparative Transform Analysis | MATLAB-generated disturbance signals | Compares FT, STFT, CWT and DWT for PQ analysis. | No automated classification framework. |
+| **Real-Time Detection and Classification of Power Quality Disturbances** | Mahsa Mozaffari, Keval Doshi, Yasin Yilmaz | 2022 | Sequential Multivariate CUSUM | Real-time multivariate grid monitoring data | Low-latency real-time PQD detection and classification. | Threshold tuning required to reduce false alarms. |
+
 # Synthetic Signal Generation for Power Quality Disturbance Analysis
 Python_code.py contains the code for synthetic waveform generation. Below are the plots-
 <img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 13 53 PM" src="https://github.com/user-attachments/assets/ae8010dd-01d0-4f16-bea8-02c18fb8569d" />
