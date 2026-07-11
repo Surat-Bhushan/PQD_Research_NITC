@@ -1,4 +1,4 @@
-<img width="574" height="623" alt="image" src="https://github.com/user-attachments/assets/4893e904-b4e6-4893-bfd7-b5e0fda00b32" /># Table of Contents
+# Table of Contents
 
 * [Univariate Linear Regression using Gradient Descent](#univariate-linear-regression-using-gradient-descent)
   * [Objective](#objective)
