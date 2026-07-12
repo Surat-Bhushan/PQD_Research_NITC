@@ -1,6 +1,6 @@
 > **Note:** This repository contains the work completed during my **Summer Internship Programme 2026** at the **National Institute of Technology Calicut (NIT Calicut)** for the project **"Automatic Power Quality Disturbance Detection and Classification System."**
 >
-> The file **`Surat_Bhushan_Summer_Internship_Report_NITC.pdf`** contains the complete internship report, including the project background, methodology, implementation details, experimental results, conclusions, and learning outcomes.
+> The file **`Surat_Bhushan_Summer_Internship_Report_NITC.docx`** contains the complete internship report, including the project background, methodology, implementation details, experimental results, conclusions, and learning outcomes.
 
 # Table of Contents
 
